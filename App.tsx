@@ -119,18 +119,24 @@ const App: React.FC = () => {
       )}
 
       <main className="flex-grow overflow-y-auto p-4 space-y-4 bg-pink-50">
-        {chatMessages.map((msg) => (
-          <div key={msg.id}>
-            <ChatBubble message={msg} />
-            {msg.sender === 'bot' && msg.songs && msg.songs.length > 0 && (
-              <div className="mt-2 ml-10 space-y-3">
-                {msg.songs.map((song, index) => (
-                  <SongCard key={`${msg.id}-song-${index}`} song={song} />
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+        {chatMessages.map((msg, index) => {
+  console.log("目前 msg.id：", msg.id);  // ← 就加在這裡！
+
+  return (
+    <div key={`msg-${msg.id}-${index}`}>
+      <ChatBubble message={msg} />
+      {msg.sender === 'bot' && msg.songs && msg.songs.length > 0 && (
+        <div className="mt-2 ml-10 space-y-3">
+          {msg.songs.map((song, sIndex) => (
+            <SongCard key={`${msg.id}-song-${sIndex}`} song={song} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+})}
+
+
         {isLoading && chatMessages.length > 0 && chatMessages[chatMessages.length-1].sender === 'user' && (
            <div className="flex justify-start">
              <div className="flex items-center space-x-2 bg-white p-3 rounded-lg shadow mr-auto max-w-xs lg:max-w-md">

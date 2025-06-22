@@ -2,7 +2,9 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { GeminiApiResponse } from '../types';
 
-const API_KEY = process.env.API_KEY;
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+console.log("API Key:", import.meta.env.VITE_GEMINI_API_KEY);
+
 
 if (!API_KEY) {
   console.error("API_KEY is not set in environment variables.");
